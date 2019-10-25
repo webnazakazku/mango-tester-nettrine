@@ -1,0 +1,19 @@
+{
+	"name": "webnazakazku/mango-tester-nettrine",
+	"type": "library",
+	"license": "MIT",
+	"require": {
+		"php": ">=7.1",
+		"nette/di": "~2.4",
+		"nettrine/dbal": "^0.3",
+		"nettrine/migrations": "^0.5",
+		"mangoweb/tester-database-creator": "^0.2",
+		"mangoweb/tester-infrastructure": "^0.2",
+		"mockery/mockery": "^1.1"
+	},
+	"autoload": {
+		"classmap": [
+			"src"
+		]
+	}
+}
