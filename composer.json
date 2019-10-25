@@ -4,6 +4,7 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=7.1",
+		"contributte/console": "^0.5",
 		"nette/di": "~2.4",
 		"nettrine/dbal": "^0.3",
 		"nettrine/migrations": "^0.5",
