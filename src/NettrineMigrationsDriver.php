@@ -12,6 +12,9 @@ use Symfony;
 class NettrineMigrationsDriver implements IMigrationsDriver
 {
 
+	/** @var bool */
+	private $appendFixtures;
+
 	/** @var Nette\DI\Container */
 	private $container;
 
@@ -25,12 +28,14 @@ class NettrineMigrationsDriver implements IMigrationsDriver
 	private $migrateCommand;
 
 	public function __construct(
+		$appendFixtures = false,
 		Nette\DI\Container $container,
 		ConsoleApplication $consoleApplication,
 		LoadDataFixturesCommand $loadDataFixturesCommand,
 		MigrateCommand $migrateCommand
 	)
 	{
+		$this->appendFixtures = $appendFixtures;
 		$this->container = $container;
 		$this->consoleApplication = $consoleApplication;
 		$this->loadDataFixturesCommand = $loadDataFixturesCommand;
@@ -56,7 +61,11 @@ class NettrineMigrationsDriver implements IMigrationsDriver
 		$this->consoleApplication->setAutoExit(false);
 		$this->consoleApplication->run($input, $output);
 
-		$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load');
+		if (!$this->appendFixtures) {
+			$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load');
+		} else {
+			$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load --append');
+		}
 
 		$this->consoleApplication->add($this->loadDataFixturesCommand);
 		$this->consoleApplication->setAutoExit(false);
