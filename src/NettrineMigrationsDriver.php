@@ -54,7 +54,7 @@ class NettrineMigrationsDriver implements IMigrationsDriver
 
 	public function reset(): void
 	{
-		$input = new Symfony\Component\Console\Input\StringInput('migrations:migrate');
+		$input = new Symfony\Component\Console\Input\StringInput('migrations:migrate -n');
 		$output = new Symfony\Component\Console\Output\BufferedOutput();
 
 		$this->consoleApplication->add($this->migrateCommand);
@@ -62,9 +62,9 @@ class NettrineMigrationsDriver implements IMigrationsDriver
 		$this->consoleApplication->run($input, $output);
 
 		if (!$this->appendFixtures) {
-			$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load');
+			$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load -n');
 		} else {
-			$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load --append');
+			$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load -n --append');
 		}
 
 		$this->consoleApplication->add($this->loadDataFixturesCommand);
