@@ -28,7 +28,7 @@ class NettrineMigrationsDriver implements IMigrationsDriver
 	private $migrateCommand;
 
 	public function __construct(
-		$appendFixtures = false,
+		?bool $appendFixtures,
 		Nette\DI\Container $container,
 		ConsoleApplication $consoleApplication,
 		LoadDataFixturesCommand $loadDataFixturesCommand,
