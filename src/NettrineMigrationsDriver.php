@@ -1,13 +1,12 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Webnazakazku\Tester\DatabaseCreator\Drivers;
 
 use Contributte\Console\Application as ConsoleApplication;
-use Doctrine\Migrations\Tools\Console\Command\MigrateCommand;
+use Exception;
 use Mangoweb\Tester\DatabaseCreator\IMigrationsDriver;
-use Nette;
-use Nettrine\Fixtures\Command\LoadDataFixturesCommand;
-use Symfony;
+use Symfony\Component\Console\Input\StringInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class NettrineMigrationsDriver implements IMigrationsDriver
 {
@@ -15,36 +14,21 @@ class NettrineMigrationsDriver implements IMigrationsDriver
 	/** @var bool */
 	private $appendFixtures;
 
-	/** @var Nette\DI\Container */
-	private $container;
-
 	/** @var ConsoleApplication */
 	private $consoleApplication;
 
-	/** @var LoadDataFixturesCommand */
-	private $loadDataFixturesCommand;
-
-	/** @var MigrateCommand */
-	private $migrateCommand;
-
 	public function __construct(
-		?bool $appendFixtures,
-		Nette\DI\Container $container,
-		ConsoleApplication $consoleApplication,
-		LoadDataFixturesCommand $loadDataFixturesCommand,
-		MigrateCommand $migrateCommand
+		bool $appendFixtures,
+		ConsoleApplication $consoleApplication
 	)
 	{
 		$this->appendFixtures = $appendFixtures;
-		$this->container = $container;
 		$this->consoleApplication = $consoleApplication;
-		$this->loadDataFixturesCommand = $loadDataFixturesCommand;
-		$this->migrateCommand = $migrateCommand;
 	}
 
 	public function continue(): void
 	{
-		throw new Nette\Application\AbortException('Continue strategy is not implement');
+		throw new Exception('Continue strategy is not implement');
 	}
 
 	public function getMigrationsHash(): string
@@ -54,21 +38,20 @@ class NettrineMigrationsDriver implements IMigrationsDriver
 
 	public function reset(): void
 	{
-		$input = new Symfony\Component\Console\Input\StringInput('migrations:migrate -n');
-		$output = new Symfony\Component\Console\Output\BufferedOutput();
+		$input = new StringInput('migrations:migrate -n');
 
-		$this->consoleApplication->add($this->migrateCommand);
+		$output = new BufferedOutput();
 		$this->consoleApplication->setAutoExit(false);
 		$this->consoleApplication->run($input, $output);
 
 		if (!$this->appendFixtures) {
-			$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load -n');
+			$input = new StringInput('doctrine:fixtures:load -n');
 		} else {
-			$input = new Symfony\Component\Console\Input\StringInput('doctrine:fixtures:load -n --append');
+			$input = new StringInput('doctrine:fixtures:load -n --append');
 		}
 
-		$this->consoleApplication->add($this->loadDataFixturesCommand);
 		$this->consoleApplication->setAutoExit(false);
 		$this->consoleApplication->run($input, $output);
 	}
+
 }

@@ -12,7 +12,9 @@
 		"nettrine/migrations": "~0.5",
 		"mangoweb/tester-database-creator": "@dev",
 		"mangoweb/tester-infrastructure": "@dev",
-		"mockery/mockery": "^1.1"
+		"mockery/mockery": "^1.1",
+		"ninjify/qa": "^0.13",
+		"phpstan/phpstan": "^1.0"
 	},
 	"autoload": {
 		"classmap": [

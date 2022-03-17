@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Webnazakazku\Tester\DatabaseCreator\Drivers;
 
@@ -17,27 +17,30 @@ class MySqlNettrineMigrationsDbalAdapter implements IDbal
 		$this->conn = $conn;
 	}
 
-	public function query($sql): array
+	/**
+	 * @return array<mixed>
+	 */
+	public function query(string $sql): array
 	{
-		return $this->conn->fetchAll($sql);
+		return $this->conn->fetchAllAssociative($sql);
 	}
 
-	public function exec($sql): int
+	public function exec(string $sql): int
 	{
-		return $this->conn->exec($sql);
+		return (int) $this->conn->executeStatement($sql);
 	}
 
-	public function escapeString($value): string
+	public function escapeString(string $value): string
 	{
 		return $this->conn->quote($value, Doctrine\DBAL\Types\Type::STRING);
 	}
 
-	public function escapeInt($value): string
+	public function escapeInt(int $value): string
 	{
 		return $this->conn->quote($value, Doctrine\DBAL\Types\Type::INTEGER);
 	}
 
-	public function escapeBool($value): string
+	public function escapeBool(bool $value): string
 	{
 		return $this->conn->quote($value, Doctrine\DBAL\Types\Type::BOOLEAN);
 	}
@@ -47,16 +50,19 @@ class MySqlNettrineMigrationsDbalAdapter implements IDbal
 		return $this->conn->quote($value, Doctrine\DBAL\Types\Type::DATETIME);
 	}
 
-	public function escapeIdentifier($value): string
+	public function escapeIdentifier(string $value): string
 	{
 		return $this->conn->quoteIdentifier($value);
 	}
 
 	public function connectToDatabase(string $name): void
 	{
-		$this->conn->exec(sprintf(
-				'DROP DATABASE %s; CREATE DATABASE %s; USE %s',
-				$this->escapeIdentifier($name), $this->escapeIdentifier($name), $this->escapeIdentifier($name)
+		$this->conn->executeStatement(sprintf(
+			'DROP DATABASE %s; CREATE DATABASE %s; USE %s',
+			$this->escapeIdentifier($name),
+			$this->escapeIdentifier($name),
+			$this->escapeIdentifier($name)
 		));
 	}
+
 }
