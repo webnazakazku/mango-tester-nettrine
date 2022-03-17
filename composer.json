@@ -7,11 +7,14 @@
 	"require": {
 		"php": ">=7.1",
 		"contributte/console": "~0.5",
-		"nette/di": "~2.4.0 || ~3.0.0",
+		"nette/di": "~3.0.0",
 		"nettrine/dbal": "~0.3",
 		"nettrine/migrations": "~0.5",
-		"mangoweb/tester-database-creator": "@dev",
-		"mangoweb/tester-infrastructure": "@dev",
+		"nettrine/fixtures": "~0.6",
+		"webnazakazku/mango-tester-database-creator": "dev-master",
+		"webnazakazku/mango-tester-infrastructure": "dev-master"
+	},
+	"require-dev": {
 		"mockery/mockery": "^1.1",
 		"ninjify/qa": "^0.13",
 		"phpstan/phpstan": "^1.0"

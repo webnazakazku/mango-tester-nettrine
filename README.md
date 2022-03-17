@@ -13,12 +13,21 @@ Usage
 `tests/config/tests.neon`
 
 ```yaml
-parameters:
-    appendFixtures: true
+extensionns:
+    console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+    migrations: Nettrine\Migrations\DI\MigrationsExtension
+    fixtures: Nettrine\Fixtures\DI\FixturesExtension
+
+migrations:
+    directory: %appDir%/../migrations
+
+fixtures:
+    paths:
+      - %appDir%/Model/Fixtures
 
 mango.tester.databaseCreator:
     driver: mysql
     dbal: Webnazakazku\Tester\DatabaseCreator\Drivers\MySqlNettrineMigrationsDbalAdapter
-    migrations: Webnazakazku\Tester\DatabaseCreator\Drivers\NettrineMigrationsDriver(%appendFixtures%)
+    migrations: Webnazakazku\Tester\DatabaseCreator\Drivers\NettrineMigrationsDriver
     strategy: reset
 ```

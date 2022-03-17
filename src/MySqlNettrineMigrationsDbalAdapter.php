@@ -4,7 +4,7 @@ namespace Webnazakazku\Tester\DatabaseCreator\Drivers;
 
 use DateTime;
 use Doctrine;
-use Mangoweb\Tester\DatabaseCreator\IDbal;
+use Webnazakazku\MangoTester\DatabaseCreator\IDbal;
 
 class MySqlNettrineMigrationsDbalAdapter implements IDbal
 {
