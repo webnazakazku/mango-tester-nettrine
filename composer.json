@@ -11,8 +11,8 @@
 		"nettrine/dbal": "~0.3",
 		"nettrine/migrations": "~0.5",
 		"nettrine/fixtures": "~0.6",
-		"webnazakazku/mango-tester-database-creator": "dev-master",
-		"webnazakazku/mango-tester-infrastructure": "dev-master"
+		"webnazakazku/mango-tester-database-creator": "^0.4",
+		"webnazakazku/mango-tester-infrastructure": "^0.6"
 	},
 	"require-dev": {
 		"mockery/mockery": "^1.1",
